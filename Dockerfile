@@ -7,7 +7,7 @@ FROM node:${NODE_VERSION}-alpine as base
 WORKDIR /app
 COPY package*.json ./
 # Expose the desired port for your Nest.js application
-EXPOSE 3000
+EXPOSE 5000
 
 FROM base AS dev
 ENV NODE_ENV=development

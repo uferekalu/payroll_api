@@ -48,8 +48,11 @@ export class ElementlinksController {
     );
   }
 
-  @Delete(':id')
-  async deleteElementLink(@Param('id', ParseIntPipe) id: number) {
-    await this.elementlinkService.deleteElementLink(id);
+  @Delete(':elementId/:id')
+  async deleteElementLink(
+    @Param('elementId', ParseIntPipe) elementId: number,
+    @Param('id', ParseIntPipe) id: number,
+  ) {
+    await this.elementlinkService.deleteElementLink(elementId, id);
   }
 }

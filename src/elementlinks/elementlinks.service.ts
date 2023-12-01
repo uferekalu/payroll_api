@@ -285,7 +285,15 @@ export class ElementlinksService {
     return allData;
   }
 
-  async deleteElementLink(id: number) {
-    await this.elementlinksRepository.delete({ id });
+  async deleteElementLink(elementId: number, id: number) {
+    try {
+      await this.elementlinksRepository.delete({
+        elementId: elementId,
+        id: id,
+      });
+    } catch (error) {
+      console.error('Error deleting element link:', error.message || error);
+      throw error;
+    }
   }
 }

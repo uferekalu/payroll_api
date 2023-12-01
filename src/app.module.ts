@@ -12,6 +12,7 @@ import { DepartmentModule } from './department/department.module';
 import { GradeModule } from './grade/grade.module';
 import { GradestepsModule } from './gradesteps/gradesteps.module';
 import { ElementlinksModule } from './elementlinks/elementlinks.module';
+import { PdfDownloadModule } from './pdf_download/pdf_download.module';
 
 @Module({
   imports: [
@@ -43,6 +44,7 @@ import { ElementlinksModule } from './elementlinks/elementlinks.module';
     GradeModule,
     GradestepsModule,
     ElementlinksModule,
+    PdfDownloadModule,
   ],
   controllers: [AppController],
   providers: [AppService],

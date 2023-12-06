@@ -11,6 +11,7 @@ import { Suborganizations } from 'src/entities/suborganizations.entity';
 import { Repository } from 'typeorm';
 import { CreateElementLinkDto } from './dto/createElementLinkDto';
 import { UpdateElementLinkDto } from './dto/updateElementLinkDto';
+import { IElementLink } from './interface/elementLinks';
 
 @Injectable()
 export class ElementlinksService {
@@ -42,10 +43,6 @@ export class ElementlinksService {
   async create(id: number, createElementLinkDto: CreateElementLinkDto) {
     const element = await this.elementRepository.findOne({
       where: { id: id },
-    });
-
-    const location = await this.lookupsRepository.findOne({
-      where: { name: 'Location' },
     });
 
     const lookupvalues = await this.lookupvaluesRepository.find();
@@ -82,16 +79,6 @@ export class ElementlinksService {
     ) {
       throw new HttpException(
         'Suborganization Id does not exist',
-        HttpStatus.BAD_REQUEST,
-      );
-    }
-
-    if (
-      createElementLinkDto.locationId &&
-      location.id !== createElementLinkDto.locationId
-    ) {
-      throw new HttpException(
-        'Location Id does not exist',
         HttpStatus.BAD_REQUEST,
       );
     }
@@ -251,9 +238,7 @@ export class ElementlinksService {
         amount: updateElementLinkDto.amount
           ? updateElementLinkDto.amount
           : elementLink.amount,
-        rate: updateElementLinkDto.rate
-          ? updateElementLinkDto.rate
-          : elementLink.rate,
+        rate: updateElementLinkDto.rate ? updateElementLinkDto.rate : 0,
         effectiveStartDate: updateElementLinkDto.effectiveStartDate
           ? updateElementLinkDto.effectiveStartDate
           : elementLink.effectiveStartDate,
@@ -262,7 +247,7 @@ export class ElementlinksService {
           : elementLink.effectiveEndDate,
         status: updateElementLinkDto.status
           ? updateElementLinkDto.status
-          : elementLink.status,
+          : 'active',
         automate: updateElementLinkDto.automate
           ? updateElementLinkDto.automate
           : elementLink.automate,
@@ -283,6 +268,22 @@ export class ElementlinksService {
       }),
     );
     return allData;
+  }
+
+  async getAnElementLink(elementId: number, id: number): Promise<IElementLink> {
+    const element = await this.elementRepository.findOne({
+      where: { id: elementId },
+    });
+    if (!element) {
+      throw new HttpException(
+        `Element with id ${elementId} does not exist`,
+        HttpStatus.BAD_REQUEST,
+      );
+    }
+    const elementLink = await this.elementlinksRepository.findOne({
+      where: { id: id, elementId: elementId },
+    });
+    return elementLink;
   }
 
   async deleteElementLink(elementId: number, id: number) {

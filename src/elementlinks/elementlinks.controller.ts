@@ -35,6 +35,14 @@ export class ElementlinksController {
     return this.elementlinkService.findAll(id);
   }
 
+  @Get(':elementId/elementlinks/:id')
+  getAnElementLink(
+    @Param('elementId', ParseIntPipe) elementId: number,
+    @Param('id', ParseIntPipe) id: number,
+  ): Promise<IElementLink> {
+    return this.elementlinkService.getAnElementLink(elementId, id);
+  }
+
   @Put(':elementId/:id')
   updateElementLink(
     @Param('elementId', ParseIntPipe) elementId: number,

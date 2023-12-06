@@ -10,8 +10,8 @@ import {
 } from '@nestjs/common';
 import { LookupvaluesService } from './lookupvalues.service';
 import { CreateLookupvaluesDto } from './dto/createLookupvaluesDto';
-import { Lookupvalues } from 'src/entities/lookupvalues.entity';
 import { UpdateLookupValuesDto } from './dto/updateLookupValueDto';
+import { LookupValue } from './interface/lookupvalue';
 
 @Controller('lookupvalues')
 export class LookupvaluesController {
@@ -34,7 +34,7 @@ export class LookupvaluesController {
   }
 
   @Get()
-  findAll(): Promise<Array<Lookupvalues>> {
+  findAll(): Promise<Array<LookupValue>> {
     return this.lookupvaluesServices.findAll();
   }
 

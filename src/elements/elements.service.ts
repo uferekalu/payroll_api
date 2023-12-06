@@ -109,47 +109,47 @@ export class ElementsService {
   }
 
   async updateElement(id: number, updateElementDto: UpdateElementDto) {
-    const payrun = await this.lookupsRepository.findOne({
-      where: { name: 'Pay Run' },
-    });
+    // const payrun = await this.lookupsRepository.findOne({
+    //   where: { name: 'Pay Run' },
+    // });
 
-    const elementClassification = await this.lookupsRepository.findOne({
-      where: { name: 'Element Classification' },
-    });
+    // const elementClassification = await this.lookupsRepository.findOne({
+    //   where: { name: 'Element Classification' },
+    // });
 
-    const elementCategory = await this.lookupsRepository.findOne({
-      where: { name: 'Element Category' },
-    });
+    // const elementCategory = await this.lookupsRepository.findOne({
+    //   where: { name: 'Element Category' },
+    // });
 
-    const employeeCategory = await this.lookupsRepository.findOne({
-      where: { name: 'Employee Category' },
-    });
+    // const employeeCategory = await this.lookupsRepository.findOne({
+    //   where: { name: 'Employee Category' },
+    // });
 
     const lookupvalues = await this.lookupvaluesRepository.find();
 
-    if (updateElementDto.payRunId !== payrun.id) {
-      throw new HttpException(
-        'Payrun Id does not exist',
-        HttpStatus.BAD_REQUEST,
-      );
-    }
+    // if (updateElementDto.payRunId !== payrun.id) {
+    //   throw new HttpException(
+    //     'Payrun Id does not exist',
+    //     HttpStatus.BAD_REQUEST,
+    //   );
+    // }
 
-    if (updateElementDto.classificationId !== elementClassification.id) {
-      throw new HttpException(
-        'Classification Id does not exist',
-        HttpStatus.BAD_REQUEST,
-      );
-    }
+    // if (updateElementDto.classificationId !== elementClassification.id) {
+    //   throw new HttpException(
+    //     'Classification Id does not exist',
+    //     HttpStatus.BAD_REQUEST,
+    //   );
+    // }
 
-    if (
-      updateElementDto.categoryId !== elementCategory.id &&
-      updateElementDto.categoryId !== employeeCategory.id
-    ) {
-      throw new HttpException(
-        'Category Id does not exist',
-        HttpStatus.BAD_REQUEST,
-      );
-    }
+    // if (
+    //   updateElementDto.categoryId !== elementCategory.id &&
+    //   updateElementDto.categoryId !== employeeCategory.id
+    // ) {
+    //   throw new HttpException(
+    //     'Category Id does not exist',
+    //     HttpStatus.BAD_REQUEST,
+    //   );
+    // }
 
     if (
       lookupvalues.find(

@@ -5,6 +5,7 @@ import { Lookupvalues } from 'src/entities/lookupvalues.entity';
 import { CreateLookupvaluesDto } from './dto/createLookupvaluesDto';
 import { Lookups } from 'src/entities/lookups.entity';
 import { UpdateLookupValuesDto } from './dto/updateLookupValueDto';
+import { LookupValue } from './interface/lookupvalue';
 
 @Injectable()
 export class LookupvaluesService {
@@ -50,10 +51,22 @@ export class LookupvaluesService {
     );
   }
 
-  async findAll(): Promise<Array<Lookupvalues>> {
-    return this.lookupvaluesRepository.find({
+  async findAll(): Promise<Array<LookupValue>> {
+    const data = await this.lookupvaluesRepository.find({
       relations: ['lookup'],
     });
+
+    const allData = await Promise.all(
+      data.map(async (dt) => {
+        const { lookup, ...others } = dt;
+
+        return {
+          ...others,
+          lookupId: lookup.id,
+        };
+      }),
+    );
+    return allData;
   }
 
   async deleteLookupvalue(id: number) {
